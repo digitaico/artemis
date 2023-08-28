@@ -1,7 +1,8 @@
-const launches = new Map();
+//const launches = new Map();
+const launches = require('./launches.mongo');
 
+/*
 let latestFlightNumber = 100;
-
 const launch = {
   flightNumber: 100,
   mission: 'Kepler Exploration X',
@@ -14,6 +15,7 @@ const launch = {
 };
 
 launches.set(launch.flightNumber, launch);
+*/
 
 function existsLaunchWithId(launchId) {
   return launches.has(launchId);

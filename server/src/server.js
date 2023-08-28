@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const MONGO_USER = process.env.MONGO_USER;
+const MONGO_PWD = process.env.MONGO_PASSWORD;
 
 const app = require('./app');
 
@@ -12,7 +13,7 @@ const {loadPlanetsData} = require('./models/planets.model');
 
 const PORT = process.env.API_PORT || 8000;
 
-const MONGO_URL = `mongodb+srv://user:${MONGO_USER}@ztm-node-nasa-exoplanet.hoo8wnl.mongodb.net/nasa?retryWrites=true&w=majority`;
+const MONGO_URL = `mongodb+srv://${MONGO_USER}:${MONGO_PWD}@ztm-node-nasa-exoplanet.hoo8wnl.mongodb.net/nasa?retryWrites=true&w=majority`;
 
 const server = http.createServer(app);
 
