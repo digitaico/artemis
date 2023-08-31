@@ -23,14 +23,6 @@ async function getAllLaunches() {
 }
 
 async function saveLaunch(launch) {
-  const planet = await planets.findOne({
-    keplerName: launch.target,
-  });
-
-  if (!planet) {
-    throw new Error('No matching planet found!');
-  }
-
   await launchesDatabase.findOneAndUpdate({
     flightNumber: launch.flightNumber,
   }, launch, {
@@ -47,6 +39,14 @@ async function getLatestFlightNumber() {
 }
 
 async function scheduleNewLaunch(launch) {
+  const planet = await planets.findOne({
+    keplerName: launch.target,
+  });
+
+  if (!planet) {
+    throw new Error('No matching planet found!');
+  }
+
   const newFlightNumber = await getLatestFlightNumber() + 1;
   const newLaunch = Object.assign(launch, {
     flightNumber: newFlightNumber,
@@ -90,6 +90,11 @@ async function populateLaunches() {
     },
   });
 
+  if (response.status !== 200) {
+    console.error('Problem launching SpaceX data!');
+    throw new Error('Launch data download failed');
+  }
+
   const launchDocs = response.data.docs;
 
   for (const launchDoc of launchDocs) {
@@ -97,6 +102,7 @@ async function populateLaunches() {
     const customers = payloads.flatMap((payload) => {
       return payload['customers'];
     });
+
     const launch = {
       flightNumber: launchDoc['flight_number'],
       mission: launchDoc['name'],
@@ -106,9 +112,9 @@ async function populateLaunches() {
       success: launchDoc['success'],
       customers,
     };
-    console.log(`${launch.flightNumber} | ${launch.rocket} | ${launch.mission}`);
+    await saveLaunch(launch);
+    // console.log(`${launch.flightNumber} | ${launch.rocket} | ${launch.mission}`);
   }
-  // TODO : populate launches collection with launch data.
 }
 
 async function loadLaunchData() {
