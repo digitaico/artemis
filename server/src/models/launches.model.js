@@ -116,7 +116,6 @@ async function populateLaunches() {
       customers,
     };
     await saveLaunch(launch);
-    // console.log(`${launch.flightNumber} | ${launch.rocket} | ${launch.mission}`);
   }
 }
 
