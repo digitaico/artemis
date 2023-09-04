@@ -1,7 +1,6 @@
 const http = require('http');
 
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
 const app = require('./app');
 
