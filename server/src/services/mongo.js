@@ -13,7 +13,6 @@ mongoose.connection.on('error', (err) => {
 });
 
 async function mongoConnect() {
-  console.warn(`@@ ${MONGODB_URL}`);
   await mongoose.connect(MONGODB_URL);
 }
 
