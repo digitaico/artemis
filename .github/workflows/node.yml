@@ -27,7 +27,7 @@ jobs:
         uses: supercharge/mongodb-github-action@1.10.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
-          envkey_MONGODB_URL: ${{ secrets.MONGODB_URL}}
+          MONGODB_URL: ${{ secrets.MONGODB_URL}}
 
       - run: npm install
       - run: npm ci
